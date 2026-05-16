@@ -25,7 +25,7 @@ INCIDENTS = [
         risk_level="high",
         summary=(
             "A social post claims polling locations changed across an entire county. "
-            "The mock review found no official confirmation in this Phase 1 dataset."
+            "The mock review found no official confirmation in the current dataset."
         ),
         evidence=[
             "Claim names no election office source.",

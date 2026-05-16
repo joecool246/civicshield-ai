@@ -30,8 +30,9 @@ export default function AskPage() {
     <div className="page-shell">
       <h1 className="section-title">Ask CivicShield</h1>
       <p className="section-copy">
-        Ask a civic process question and see a mock source-grounded answer. This
-        MVP abstains when the mock dataset does not support a reliable response.
+        Ask a civic process question and see an answer grounded in local trusted
+        source snippets. The assistant abstains when the trusted source set does
+        not support a reliable response.
       </p>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
@@ -80,7 +81,7 @@ export default function AskPage() {
             </div>
           ) : (
             <p className="mt-4 text-civic-muted">
-              Submit a question to see the mock answer and citation area.
+              Submit a question to see the answer and citation area.
             </p>
           )}
         </section>

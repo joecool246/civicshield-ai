@@ -1,0 +1,9 @@
+{
+  "id": "indiana-voters-portal",
+  "title": "Indiana Voters Portal",
+  "url": "https://indianavoters.in.gov/",
+  "publisher": "Indiana Secretary of State",
+  "jurisdiction": "Indiana",
+  "topics": ["voter registration", "polling location", "voter id", "ballot information"],
+  "content": "The Indiana Voters Portal is the official state portal for Indiana voters. Voters can use it to check registration status, find polling location information, review ballot information, and confirm voter identification and election process requirements."
+}

@@ -21,8 +21,8 @@ export default function MethodologyPage() {
       <h1 className="section-title">Methodology</h1>
       <p className="section-copy">
         CivicShield is designed as a nonpartisan civic verification platform.
-        Phase 1 demonstrates the workflow with mock data before real retrieval,
-        AI models, databases, or human review queues are added.
+        Phase 2 demonstrates local source retrieval and mock provider output
+        before real AI calls, databases, or human review queues are added.
       </p>
 
       <section className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">

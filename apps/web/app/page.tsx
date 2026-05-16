@@ -4,7 +4,7 @@ import { ArrowRight, FileSearch, Landmark, ListChecks } from "lucide-react";
 const capabilities = [
   {
     title: "Ask civic questions",
-    copy: "Get mock, source-backed answers for official election process questions.",
+    copy: "Get source-grounded answers from the local trusted source set.",
     icon: Landmark,
   },
   {
@@ -25,7 +25,7 @@ export default function HomePage() {
       <section className="page-shell grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-civic-teal">
-            Indiana 2026 pilot - mock data MVP
+            Indiana 2026 pilot - Phase 2 source-grounded MVP
           </p>
           <h1 className="mt-4 max-w-4xl text-4xl font-semibold tracking-normal text-civic-ink sm:text-5xl">
             CivicShield helps voters verify political information in the AI era.
@@ -48,11 +48,11 @@ export default function HomePage() {
           </div>
         </div>
         <div className="panel">
-          <h2 className="text-xl font-semibold text-civic-ink">Phase 1 boundaries</h2>
+          <h2 className="text-xl font-semibold text-civic-ink">Phase 2 boundaries</h2>
           <div className="mt-5 space-y-4 text-sm leading-6 text-civic-muted">
             <p>
-              This MVP uses mock backend responses first, so the product flow can
-              be tested before adding real AI, databases, auth, or production systems.
+              This MVP uses a local trusted source dataset and a mock AI provider,
+              so the product flow works without API keys, databases, auth, or production systems.
             </p>
             <p>
               CivicShield does not endorse candidates, does not recommend votes,

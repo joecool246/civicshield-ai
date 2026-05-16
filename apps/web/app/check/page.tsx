@@ -33,7 +33,7 @@ export default function CheckPage() {
       <h1 className="section-title">Check This Political Post</h1>
       <p className="section-copy">
         Paste a political claim, ad text, social post, or screenshot transcript.
-        CivicShield returns a mock verification-oriented review for Phase 1.
+        CivicShield returns a structured verification-oriented review for Phase 2.
       </p>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
@@ -66,6 +66,16 @@ export default function CheckPage() {
                 <div>
                   <dt className="font-medium text-civic-ink">Topic</dt>
                   <dd className="mt-1 text-civic-muted">{result.topic}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-civic-ink">Jurisdiction</dt>
+                  <dd className="mt-1 text-civic-muted">{result.jurisdiction}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-civic-ink">Voting related</dt>
+                  <dd className="mt-1 text-civic-muted">
+                    {result.is_voting_related ? "Yes" : "No"}
+                  </dd>
                 </div>
                 <div>
                   <dt className="font-medium text-civic-ink">Confidence</dt>

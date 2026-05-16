@@ -4,7 +4,7 @@ export function SourcesList({ sources }: { sources: Source[] }) {
   if (sources.length === 0) {
     return (
       <p className="rounded-md border border-dashed border-civic-line bg-white p-4 text-sm text-civic-muted">
-        No source in the Phase 1 mock dataset supports a citation yet.
+        No trusted local source supports a citation yet.
       </p>
     );
   }

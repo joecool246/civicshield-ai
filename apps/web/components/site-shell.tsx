@@ -42,8 +42,8 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-civic-line bg-white">
       <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-civic-muted">
-        CivicShield AI Phase 1 uses mock data only. It does not endorse candidates,
-        recommend votes, or claim perfect deepfake detection.
+        CivicShield AI Phase 2 uses local trusted sources and a mock provider by default.
+        It does not endorse candidates, recommend votes, or claim perfect deepfake detection.
       </div>
     </footer>
   );

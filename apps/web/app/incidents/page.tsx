@@ -30,7 +30,7 @@ export default function IncidentsPage() {
       <h1 className="section-title">Incident Tracker</h1>
       <p className="section-copy">
         A public mock dashboard for suspicious, misleading, or AI-related
-        political content. Phase 1 examples are illustrative and not live cases.
+        political content. These examples are illustrative and not live cases.
       </p>
 
       <div className="mt-8 space-y-4">

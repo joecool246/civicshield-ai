@@ -3,16 +3,20 @@
 CivicShield AI is a nonpartisan civic verification platform for helping voters
 verify political information in the AI era.
 
-Phase 1 is a local MVP scaffold with mock data only:
+Phase 2 adds an AI-ready pipeline while keeping the app runnable without real
+API keys:
 
 - Next.js frontend in `apps/web`
 - FastAPI backend in `apps/api`
 - Shared civic labels in `packages/shared`
-- Basic pages for Home, Ask, Check, Incidents, and Methodology
-- Mock API routes for health, civic questions, content checks, and incidents
+- AI provider abstraction with a mock provider by default
+- OpenAI provider placeholder that only activates when configured with an API key
+- Local trusted source snippets in `apps/api/data/trusted_sources`
+- Source-grounded Ask CivicShield responses
+- Structured Check This Post output
 
-This phase does not include real AI, a database, authentication, browser
-extension, admin dashboard, bias audit lab, or production deployment.
+This phase does not include a database, authentication, browser extension, admin
+dashboard, bias audit lab, or production deployment.
 
 ## Requirements
 
@@ -67,11 +71,45 @@ The frontend reads the API URL from `NEXT_PUBLIC_API_URL`. If unset, it uses:
 http://localhost:8000
 ```
 
+## AI Provider Setup
+
+Local development uses the mock provider by default. No API key is required.
+
+```text
+CIVICSHIELD_AI_PROVIDER=mock
+```
+
+To test the OpenAI placeholder later, set both variables before starting the
+backend:
+
+```powershell
+$env:CIVICSHIELD_AI_PROVIDER="openai"
+$env:OPENAI_API_KEY="your_api_key_here"
+uvicorn app.main:app --reload --port 8000
+```
+
+The OpenAI provider is intentionally a placeholder in Phase 2. It only activates
+when `OPENAI_API_KEY` is present and still returns deterministic safe output
+until a real source-grounded prompt, validation layer, and tests are added.
+
+## Trusted Sources
+
+Trusted source snippets live in:
+
+```text
+apps/api/data/trusted_sources/
+```
+
+Current sample sources include Vote.gov, the Indiana Voters Portal, the Indiana
+Election Division, and an Indiana county election office placeholder. Ask
+CivicShield retrieves from these local files before answering. If no trusted
+source supports the answer, it returns `unable_to_verify`.
+
 ## Pages
 
-- `/` explains CivicShield and the Phase 1 mock-data boundary.
-- `/ask` lets users submit civic process questions and receive mock source-backed answers.
-- `/check` lets users paste political content and receive a mock verification result.
+- `/` explains CivicShield and the mock-data boundary.
+- `/ask` lets users submit civic questions and receive source-grounded answers.
+- `/check` lets users paste political content and receive structured CivicShield labels.
 - `/incidents` lists mock incident tracker examples.
 - `/incidents/[id]` shows a mock incident detail view.
 - `/methodology` explains nonpartisan verification principles and label meanings.
@@ -84,13 +122,15 @@ http://localhost:8000
 - Cite sources whenever answering civic questions.
 - Show uncertainty clearly.
 - Never claim perfect deepfake detection.
+- Do not invent sources.
 - Label content as verified, misleading, disputed, unconfirmed, missing context, or unable to verify.
 - Separate evidence from interpretation.
 - Use human review later for high-risk political or election claims.
 
-## Phase 1 Limitations
+## Phase 2 Limitations
 
-- Responses are deterministic mock logic, not real AI.
-- Sources are static examples, not live retrieval.
-- Incidents are illustrative mock records.
+- The default provider is deterministic mock logic, not real AI.
+- Local retrieval is simple keyword matching over JSON files, not vector search.
+- The OpenAI provider is a safe placeholder and does not call the OpenAI API yet.
+- Incidents remain illustrative mock records.
 - There is no database, authentication, upload storage, admin review queue, or browser extension.

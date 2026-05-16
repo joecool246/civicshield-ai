@@ -18,6 +18,8 @@ export type AskResponse = {
 export type CheckResponse = {
   claim_text: string;
   topic: string;
+  jurisdiction: string;
+  is_voting_related: boolean;
   verification_status: VerificationStatus;
   ai_disclosure_status:
     | "ai_disclosed"

@@ -53,6 +53,8 @@ class CheckRequest(BaseModel):
 class CheckResponse(BaseModel):
     claim_text: str
     topic: str
+    jurisdiction: str
+    is_voting_related: bool
     verification_status: VerificationStatus
     ai_disclosure_status: AiDisclosureStatus
     sponsor_status: SponsorStatus
