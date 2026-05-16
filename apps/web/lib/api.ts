@@ -1,4 +1,11 @@
-import type { AskResponse, CheckResponse, Incident, ReviewTask, ReviewTaskUpdate } from "@/lib/types";
+import type {
+  AskResponse,
+  BiasAudit,
+  CheckResponse,
+  Incident,
+  ReviewTask,
+  ReviewTaskUpdate,
+} from "@/lib/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
@@ -61,5 +68,17 @@ export function publishIncident(taskId: string) {
   return request<Incident>("/api/admin/incidents", {
     method: "POST",
     body: JSON.stringify({ task_id: taskId }),
+  });
+}
+
+export function listBiasAudits() {
+  return request<BiasAudit[]>("/api/bias-audits", {
+    cache: "no-store",
+  });
+}
+
+export function getBiasAudit(id: string) {
+  return request<BiasAudit>(`/api/bias-audits/${id}`, {
+    cache: "no-store",
   });
 }

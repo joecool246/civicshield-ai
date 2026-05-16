@@ -81,3 +81,20 @@ export type ReviewTaskUpdate = Partial<{
   suggested_verification_status: VerificationStatus;
   suggested_risk_level: RiskLevel;
 }>;
+
+export type BiasAudit = {
+  id: string;
+  model_name: string;
+  topic: string;
+  prompt: string;
+  mock_model_response: string;
+  source_balance_score: number;
+  framing_score: number;
+  symmetry_score: number;
+  refusal_consistency_score: number;
+  candidate_neutrality_score: number;
+  voting_advice_flag: boolean;
+  uncertainty_transparency_score: number;
+  overall_bias_risk: RiskLevel;
+  methodology_notes: string;
+};

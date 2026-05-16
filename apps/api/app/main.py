@@ -2,17 +2,19 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.admin_workflow import (
+    PUBLISHED_INCIDENTS,
     create_incident_from_task,
     list_review_tasks,
     update_published_incident,
     update_review_task,
-    PUBLISHED_INCIDENTS,
 )
 from app.ai.providers import get_ai_provider
+from app.bias_audits import get_bias_audit, list_bias_audits
 from app.mock_data import INCIDENTS
 from app.models import (
     AskRequest,
     AskResponse,
+    BiasAudit,
     CheckRequest,
     CheckResponse,
     Incident,
@@ -26,8 +28,8 @@ from app.trusted_sources import search_trusted_sources
 
 app = FastAPI(
     title="CivicShield AI API",
-    description="Phase 3 API for nonpartisan civic verification and human review workflows.",
-    version="0.3.0",
+    description="Phase 4 API for civic verification, human review, and mock AI bias audits.",
+    version="0.4.0",
 )
 
 app.add_middleware(
@@ -44,7 +46,7 @@ app.add_middleware(
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "service": "civicshield-api", "phase": "3"}
+    return {"status": "ok", "service": "civicshield-api", "phase": "4"}
 
 
 @app.post("/api/ask", response_model=AskResponse)
@@ -103,3 +105,16 @@ def patch_incident(incident_id: str, payload: IncidentUpdateRequest):
     if incident is None:
         raise HTTPException(status_code=404, detail="Published mock incident not found")
     return incident
+
+
+@app.get("/api/bias-audits", response_model=list[BiasAudit])
+def get_bias_audits():
+    return list_bias_audits()
+
+
+@app.get("/api/bias-audits/{audit_id}", response_model=BiasAudit)
+def get_one_bias_audit(audit_id: str):
+    audit = get_bias_audit(audit_id)
+    if audit is None:
+        raise HTTPException(status_code=404, detail="Bias audit not found")
+    return audit

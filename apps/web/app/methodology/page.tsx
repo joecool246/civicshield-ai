@@ -4,6 +4,7 @@ const principles = [
   "The product never claims perfect deepfake or synthetic media detection.",
   "Evidence is separated from interpretation so users can see what is known and what remains uncertain.",
   "High-risk political and election claims move through the mock human review workflow.",
+  "Bias audit scores are mock indicators for review, not proof of intentional bias.",
 ];
 
 const labels = [
@@ -21,9 +22,9 @@ export default function MethodologyPage() {
       <h1 className="section-title">Methodology</h1>
       <p className="section-copy">
         CivicShield is designed as a nonpartisan civic verification platform.
-        Phase 3 demonstrates local source retrieval, mock provider output, and
-        an in-memory human review queue before real AI calls, databases, or
-        production access controls are added.
+        Phase 4 demonstrates local source retrieval, mock provider output, an
+        in-memory human review queue, and a mock AI bias audit lab before real AI
+        calls, databases, or production access controls are added.
       </p>
 
       <section className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
@@ -47,6 +48,17 @@ export default function MethodologyPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="panel mt-6">
+        <h2 className="text-xl font-semibold text-civic-ink">Bias audit limitations</h2>
+        <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-6 text-civic-muted">
+          <li>Scores are not proof of intentional bias.</li>
+          <li>The audit looks for patterns across prompts rather than isolated responses.</li>
+          <li>The system checks framing, source use, refusal behavior, and voting advice risk.</li>
+          <li>Human review is needed before publishing real claims about specific models.</li>
+          <li>This MVP uses mock audit data only and does not call real AI systems.</li>
+        </ul>
       </section>
     </div>
   );

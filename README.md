@@ -3,8 +3,7 @@
 CivicShield AI is a nonpartisan civic verification platform for helping voters
 verify political information in the AI era.
 
-Phase 3 adds a mock human review dashboard so high-risk political and election
-claims are not treated as final AI judgments:
+Phase 4 adds a mock AI Bias Audit Lab for studying political AI response risks:
 
 - Next.js frontend in `apps/web`
 - FastAPI backend in `apps/api`
@@ -15,15 +14,16 @@ claims are not treated as final AI judgments:
 - Structured Check This Post output
 - Admin review queue at `/admin`
 - Mock in-memory incident publishing from reviewed tasks
+- Bias Audit Lab at `/bias-audit`
 
-This phase does not include a database, authentication, browser extension, bias
-audit lab, or production deployment.
+This phase does not include a database, authentication, browser extension, real
+AI calls, or production deployment.
 
 ## Production TODO
 
 TODO: Add authentication and role-based access before production. The `/admin`
 page and `/api/admin/*` routes are intentionally unauthenticated for the local
-Phase 3 MVP only.
+MVP only.
 
 ## Requirements
 
@@ -60,6 +60,8 @@ Backend routes:
 - `POST /api/admin/review/{task_id}`
 - `POST /api/admin/incidents`
 - `PATCH /api/admin/incidents/{incident_id}`
+- `GET /api/bias-audits`
+- `GET /api/bias-audits/{audit_id}`
 
 ## Run the frontend
 
@@ -81,6 +83,19 @@ The frontend reads the API URL from `NEXT_PUBLIC_API_URL`. If unset, it uses:
 ```text
 http://localhost:8000
 ```
+
+## Test the Bias Audit Lab
+
+1. Start the backend and frontend.
+2. Open `http://localhost:3000/bias-audit`.
+3. Confirm mock audit rows appear for voter ID laws, immigration, policing,
+   climate policy, candidate comparison, voting advice refusal, and ballot
+   measure explanation.
+4. Confirm each card shows the model name, topic, prompt, mock response, scores,
+   voting advice flag, overall risk, and methodology notes.
+
+The audit data is mock-only. Scores are not proof of intentional bias, and
+human review is required before publishing real claims about specific models.
 
 ## Test the Admin Dashboard
 
@@ -137,7 +152,8 @@ source supports the answer, it returns `unable_to_verify`.
 - `/incidents` lists mock and admin-published incident examples.
 - `/incidents/[id]` shows a mock incident detail view.
 - `/admin` shows the mock human review queue.
-- `/methodology` explains nonpartisan verification principles and label meanings.
+- `/bias-audit` shows the mock AI political bias audit lab.
+- `/methodology` explains nonpartisan verification principles and audit limitations.
 
 ## Product Principles
 
@@ -146,16 +162,18 @@ source supports the answer, it returns `unable_to_verify`.
 - Use official sources first.
 - Cite sources whenever answering civic questions.
 - Show uncertainty clearly.
-- Never claim perfect deepfake detection.
+- Never claim perfect deepfake or bias detection.
 - Do not invent sources.
+- Do not claim that real models are biased from mock audit data.
 - Label content as verified, misleading, disputed, unconfirmed, missing context, or unable to verify.
 - Separate evidence from interpretation.
 - Use human review for high-risk political or election claims.
 
-## Phase 3 Limitations
+## Phase 4 Limitations
 
 - The default provider is deterministic mock logic, not real AI.
+- Bias audit data is seeded mock data and does not evaluate real models.
 - Local retrieval is simple keyword matching over JSON files, not vector search.
 - The OpenAI provider is a safe placeholder and does not call the OpenAI API yet.
-- Review tasks and admin-published incidents are in-memory only.
-- There is no database, authentication, upload storage, browser extension, or bias audit lab.
+- Review tasks, admin-published incidents, and bias audits are in-memory/mock data only.
+- There is no database, authentication, upload storage, browser extension, or production deployment.

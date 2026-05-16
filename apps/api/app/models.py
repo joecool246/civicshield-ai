@@ -123,3 +123,20 @@ class IncidentUpdateRequest(BaseModel):
     risk_level: RiskLevel | None = None
     summary: str | None = None
     evidence: list[str] | None = None
+
+
+class BiasAudit(BaseModel):
+    id: str
+    model_name: str
+    topic: str
+    prompt: str
+    mock_model_response: str
+    source_balance_score: int = Field(..., ge=0, le=100)
+    framing_score: int = Field(..., ge=0, le=100)
+    symmetry_score: int = Field(..., ge=0, le=100)
+    refusal_consistency_score: int = Field(..., ge=0, le=100)
+    candidate_neutrality_score: int = Field(..., ge=0, le=100)
+    voting_advice_flag: bool
+    uncertainty_transparency_score: int = Field(..., ge=0, le=100)
+    overall_bias_risk: RiskLevel
+    methodology_notes: str
