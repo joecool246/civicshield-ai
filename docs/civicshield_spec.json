@@ -1,0 +1,190 @@
+{
+  "project": {
+    "name": "CivicShield AI",
+    "type": "nonpartisan civic technology platform",
+    "tagline": "The verification layer for democracy in the AI era.",
+    "mission": "CivicShield protects voters from AI-driven political misinformation by helping them verify political information, track suspicious political content, and understand civic issues through official, nonpartisan sources.",
+    "core_problem": "AI is making political information easier to fake, harder to verify, and harder for voters to trust.",
+    "initial_scope": "Indiana 2026 pilot",
+    "primary_wedge": "Check This Political Post"
+  },
+  "product_principles": [
+    "Do not endorse candidates.",
+    "Do not generate voting recommendations.",
+    "Use official sources first.",
+    "Cite sources whenever answering civic questions.",
+    "Show uncertainty clearly.",
+    "Never claim perfect deepfake detection.",
+    "Label content as verified, misleading, disputed, unconfirmed, missing context, or unable to verify."
+  ],
+  "target_users": {
+    "primary": [
+      "Young voters",
+      "College students",
+      "First-time voters",
+      "People who see political content on social media but do not actively follow politics"
+    ],
+    "secondary": [
+      "Teachers",
+      "Professors",
+      "Student newspapers",
+      "Local journalists",
+      "Election officials",
+      "Civic nonprofits",
+      "Political explainers and creators"
+    ]
+  },
+  "core_modules": {
+    "ask_civicshield": {
+      "description": "Official-source civic assistant that answers election and policy questions using verified sources.",
+      "example_questions": [
+        "When is the voter registration deadline?",
+        "What ID do I need to vote?",
+        "Where do I check my polling location?",
+        "What does this ballot measure mean?"
+      ],
+      "requirements": [
+        "Use retrieval-augmented generation later.",
+        "For Phase 1, use mock source-backed answers.",
+        "Cite sources in answers.",
+        "Abstain if no trusted source supports the answer.",
+        "Never recommend candidates."
+      ]
+    },
+    "check_this_post": {
+      "description": "User pastes or uploads political content and receives a verification-oriented analysis.",
+      "inputs": [
+        "Text",
+        "URL",
+        "Screenshot placeholder"
+      ],
+      "outputs": [
+        "claim_text",
+        "topic",
+        "verification_status",
+        "ai_disclosure_status",
+        "sponsor_status",
+        "risk_level",
+        "confidence",
+        "explanation",
+        "suggested_next_steps"
+      ],
+      "allowed_statuses": [
+        "verified",
+        "misleading",
+        "disputed",
+        "unconfirmed",
+        "missing_context",
+        "unable_to_verify"
+      ]
+    },
+    "incident_tracker": {
+      "description": "Public dashboard of suspicious, misleading, or AI-related political content.",
+      "incident_types": [
+        "Fake candidate video",
+        "Fake audio or robocall",
+        "AI-generated political ad",
+        "Fake screenshot",
+        "Fake endorsement",
+        "False voting information",
+        "Bot-like political amplification",
+        "Misleading policy claim"
+      ]
+    },
+    "ai_bias_audit_lab": {
+      "description": "Later-stage benchmark for auditing how AI systems answer political and civic questions.",
+      "scoring_dimensions": [
+        "Source balance",
+        "Ideological framing",
+        "Emotional language",
+        "Refusal consistency",
+        "Candidate neutrality",
+        "Voting advice risk",
+        "Symmetry of criticism",
+        "Transparency about uncertainty"
+      ]
+    }
+  },
+  "tech_stack": {
+    "frontend": {
+      "framework": "Next.js",
+      "language": "TypeScript",
+      "styling": "Tailwind CSS",
+      "ui": "shadcn/ui",
+      "location": "apps/web"
+    },
+    "backend": {
+      "framework": "FastAPI",
+      "language": "Python",
+      "location": "apps/api"
+    },
+    "database": {
+      "primary": "PostgreSQL",
+      "vector_search": "pgvector later",
+      "phase_1": "mock data only"
+    },
+    "ai": {
+      "phase_1": "mock AI responses",
+      "later": [
+        "OpenAI API",
+        "Anthropic API",
+        "Gemini API",
+        "open-source classifiers"
+      ]
+    }
+  },
+  "frontend_pages": [
+    "/",
+    "/ask",
+    "/check",
+    "/incidents",
+    "/methodology"
+  ],
+  "backend_routes": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "description": "Health check route."
+    },
+    {
+      "method": "POST",
+      "path": "/api/ask",
+      "description": "Mock official-source civic assistant response."
+    },
+    {
+      "method": "POST",
+      "path": "/api/check",
+      "description": "Analyze submitted political content using mock logic."
+    },
+    {
+      "method": "GET",
+      "path": "/api/incidents",
+      "description": "Return mock incident tracker data."
+    },
+    {
+      "method": "GET",
+      "path": "/api/incidents/{id}",
+      "description": "Return one mock incident."
+    }
+  ],
+  "phase_1_requirements": {
+    "goal": "Create a runnable monorepo MVP with a Next.js frontend and FastAPI backend.",
+    "must_have": [
+      "Clean homepage",
+      "Ask CivicShield page",
+      "Check This Post page",
+      "Incident Tracker page",
+      "Methodology page",
+      "Mock backend routes",
+      "Frontend connected to backend",
+      "README with local setup instructions"
+    ],
+    "do_not_build_yet": [
+      "Real AI integration",
+      "Real database",
+      "Authentication",
+      "Browser extension",
+      "Production deployment"
+    ]
+  }
+}
