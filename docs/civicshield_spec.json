@@ -6,7 +6,25 @@
     "mission": "CivicShield protects voters from AI-driven political misinformation by helping them verify political information, track suspicious political content, and understand civic issues through official, nonpartisan sources.",
     "core_problem": "AI is making political information easier to fake, harder to verify, and harder for voters to trust.",
     "initial_scope": "Indiana 2026 pilot",
-    "primary_wedge": "Check This Political Post"
+    "primary_wedge": "Check This Political Post",
+    "long_term_vision": "A national civic verification infrastructure used by voters, schools, journalists, researchers, civic organizations, and election officials."
+  },
+  "positioning": {
+    "what_it_is": [
+      "A nonpartisan civic verification platform",
+      "An official-source voter information assistant",
+      "A public tracker for AI-related political misinformation",
+      "A political AI bias audit lab",
+      "A media literacy and civic education tool"
+    ],
+    "what_it_is_not": [
+      "Not a partisan campaign tool",
+      "Not a candidate endorsement platform",
+      "Not a perfect deepfake detector",
+      "Not a general-purpose political opinion chatbot",
+      "Not a replacement for official election offices"
+    ],
+    "public_facing_pitch": "Upload or paste political content and CivicShield helps you check what is verified, disputed, missing context, or unconfirmed."
   },
   "product_principles": [
     "Do not endorse candidates.",
@@ -15,7 +33,9 @@
     "Cite sources whenever answering civic questions.",
     "Show uncertainty clearly.",
     "Never claim perfect deepfake detection.",
-    "Label content as verified, misleading, disputed, unconfirmed, missing context, or unable to verify."
+    "Label content as verified, misleading, disputed, unconfirmed, missing context, or unable to verify.",
+    "Separate evidence from interpretation.",
+    "Use human review for high-risk election claims."
   ],
   "target_users": {
     "primary": [
@@ -103,6 +123,16 @@
         "Symmetry of criticism",
         "Transparency about uncertainty"
       ]
+    },
+    "civic_explainer_engine": {
+      "description": "Explains how political issues affect ordinary users in practical terms.",
+      "example_questions": [
+        "How does city council affect rent?",
+        "How does the county prosecutor affect policing?",
+        "How does state government affect tuition?",
+        "What does this AI regulation bill mean for students?",
+        "Why should I care about this local race?"
+      ]
     }
   },
   "tech_stack": {
@@ -123,6 +153,13 @@
       "vector_search": "pgvector later",
       "phase_1": "mock data only"
     },
+    "storage": {
+      "phase_1": "local placeholders only",
+      "later": [
+        "Cloudflare R2",
+        "AWS S3"
+      ]
+    },
     "ai": {
       "phase_1": "mock AI responses",
       "later": [
@@ -139,6 +176,12 @@
     "/check",
     "/incidents",
     "/methodology"
+  ],
+  "future_frontend_pages": [
+    "/admin",
+    "/bias-audit",
+    "/explainers",
+    "/partners"
   ],
   "backend_routes": [
     {
@@ -167,6 +210,39 @@
       "description": "Return one mock incident."
     }
   ],
+  "labels": {
+    "verification_status": [
+      "verified",
+      "misleading",
+      "disputed",
+      "unconfirmed",
+      "missing_context",
+      "unable_to_verify"
+    ],
+    "risk_level": [
+      "low",
+      "medium",
+      "high",
+      "critical"
+    ],
+    "ai_disclosure_status": [
+      "ai_disclosed",
+      "ai_not_disclosed",
+      "ai_unclear",
+      "not_applicable"
+    ],
+    "sponsor_status": [
+      "sponsor_found",
+      "sponsor_missing",
+      "sponsor_unclear",
+      "not_applicable"
+    ],
+    "confidence": [
+      "low",
+      "medium",
+      "high"
+    ]
+  },
   "phase_1_requirements": {
     "goal": "Create a runnable monorepo MVP with a Next.js frontend and FastAPI backend.",
     "must_have": [
@@ -184,6 +260,8 @@
       "Real database",
       "Authentication",
       "Browser extension",
+      "Admin dashboard",
+      "Bias audit lab",
       "Production deployment"
     ]
   }
