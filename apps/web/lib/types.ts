@@ -1,0 +1,49 @@
+import type { RiskLevel, VerificationStatus } from "@civicshield/shared";
+
+export type Source = {
+  title: string;
+  url: string;
+  publisher: string;
+};
+
+export type AskResponse = {
+  answer: string;
+  status: VerificationStatus;
+  confidence: "low" | "medium" | "high";
+  sources: Source[];
+  note: string;
+  suggested_next_steps: string[];
+};
+
+export type CheckResponse = {
+  claim_text: string;
+  topic: string;
+  verification_status: VerificationStatus;
+  ai_disclosure_status:
+    | "ai_disclosed"
+    | "ai_not_disclosed"
+    | "ai_unclear"
+    | "not_applicable";
+  sponsor_status:
+    | "sponsor_found"
+    | "sponsor_missing"
+    | "sponsor_unclear"
+    | "not_applicable";
+  risk_level: RiskLevel;
+  confidence: "low" | "medium" | "high";
+  explanation: string;
+  suggested_next_steps: string[];
+  sources: Source[];
+};
+
+export type Incident = {
+  id: string;
+  title: string;
+  incident_type: string;
+  location: string;
+  status: VerificationStatus;
+  risk_level: RiskLevel;
+  summary: string;
+  evidence: string[];
+  sources: Source[];
+};

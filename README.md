@@ -1,99 +1,82 @@
 # CivicShield AI
 
-CivicShield AI is a nonpartisan civic technology platform designed to help voters verify political information in the AI era.
+CivicShield AI is a nonpartisan civic verification platform for helping voters
+verify political information in the AI era.
 
-## Mission
+Phase 1 is a local MVP scaffold with mock data only:
 
-CivicShield protects voters from AI-driven political misinformation by helping them verify political information, track suspicious political content, and understand civic issues through official, nonpartisan sources.
+- Next.js frontend in `apps/web`
+- FastAPI backend in `apps/api`
+- Shared civic labels in `packages/shared`
+- Basic pages for Home, Ask, Check, Incidents, and Methodology
+- Mock API routes for health, civic questions, content checks, and incidents
 
-## Core problem
+This phase does not include real AI, a database, authentication, browser
+extension, admin dashboard, bias audit lab, or production deployment.
 
-AI is making political information easier to fake, harder to verify, and harder for voters to trust.
+## Requirements
 
-CivicShield aims to become a verification layer between voters and political information.
+- Node.js 20 or newer
+- npm 10 or newer
+- Python 3.11 or newer
 
-## Initial scope
+## Run the backend
 
-The first pilot focuses on an Indiana 2026 MVP.
+From the repo root:
 
-## Core modules
+```powershell
+cd apps/api
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
 
-### Ask CivicShield
+Health check:
 
-An official-source civic assistant that answers election and policy questions using verified sources.
+```powershell
+Invoke-RestMethod http://localhost:8000/health
+```
 
-### Check This Post
+Backend routes:
 
-A tool where users can paste or upload political content and receive a verification-oriented analysis.
+- `GET /health`
+- `POST /api/ask`
+- `POST /api/check`
+- `GET /api/incidents`
+- `GET /api/incidents/{id}`
 
-### Incident Tracker
+## Run the frontend
 
-A public dashboard of suspicious, misleading, or AI-related political content.
+In a second terminal, from the repo root:
 
-### AI Bias Audit Lab
+```powershell
+npm install
+npm run dev:web
+```
 
-A later-stage benchmark for auditing how AI systems answer political and civic questions.
+Open:
 
-## Tech stack
+```text
+http://localhost:3000
+```
 
-### Frontend
+The frontend reads the API URL from `NEXT_PUBLIC_API_URL`. If unset, it uses:
 
-- Next.js
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
+```text
+http://localhost:8000
+```
 
-Location:
+## Pages
 
-apps/web
+- `/` explains CivicShield and the Phase 1 mock-data boundary.
+- `/ask` lets users submit civic process questions and receive mock source-backed answers.
+- `/check` lets users paste political content and receive a mock verification result.
+- `/incidents` lists mock incident tracker examples.
+- `/incidents/[id]` shows a mock incident detail view.
+- `/methodology` explains nonpartisan verification principles and label meanings.
 
-### Backend
-
-- FastAPI
-- Python
-
-Location:
-
-apps/api
-
-### Later
-
-- PostgreSQL
-- pgvector
-- AI provider abstraction
-- Admin review dashboard
-- Browser extension
-- Public incident database
-
-## Project structure
-
-apps/
-  web/
-  api/
-docs/
-  civicshield_spec.json
-  phase_1_mvp.md
-  phase_2_ai_pipeline.md
-  phase_3_admin_dashboard.md
-  phase_4_bias_audit_lab.md
-packages/
-  shared/
-AGENTS.md
-README.md
-
-## Phase 1 goal
-
-Create a runnable MVP with:
-
-- Next.js frontend
-- FastAPI backend
-- Basic pages
-- Mock backend routes
-- Frontend connected to backend
-- Clean CivicShield branding
-- Local setup instructions
-
-## Product principles
+## Product Principles
 
 - Do not endorse candidates.
 - Do not generate voting recommendations.
@@ -102,9 +85,12 @@ Create a runnable MVP with:
 - Show uncertainty clearly.
 - Never claim perfect deepfake detection.
 - Label content as verified, misleading, disputed, unconfirmed, missing context, or unable to verify.
+- Separate evidence from interpretation.
+- Use human review later for high-risk political or election claims.
 
-## Current status
+## Phase 1 Limitations
 
-This repo currently contains the project specification and build-phase instructions.
-
-The next step is to build Phase 1.
+- Responses are deterministic mock logic, not real AI.
+- Sources are static examples, not live retrieval.
+- Incidents are illustrative mock records.
+- There is no database, authentication, upload storage, admin review queue, or browser extension.
