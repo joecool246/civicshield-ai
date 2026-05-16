@@ -1,4 +1,4 @@
-import type { AskResponse, CheckResponse, Incident } from "@/lib/types";
+import type { AskResponse, CheckResponse, Incident, ReviewTask, ReviewTaskUpdate } from "@/lib/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
@@ -41,5 +41,25 @@ export function listIncidents() {
 export function getIncident(id: string) {
   return request<Incident>(`/api/incidents/${id}`, {
     cache: "no-store",
+  });
+}
+
+export function listReviewQueue() {
+  return request<ReviewTask[]>("/api/admin/review-queue", {
+    cache: "no-store",
+  });
+}
+
+export function updateReviewTask(taskId: string, payload: ReviewTaskUpdate) {
+  return request<ReviewTask>(`/api/admin/review/${taskId}`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export function publishIncident(taskId: string) {
+  return request<Incident>("/api/admin/incidents", {
+    method: "POST",
+    body: JSON.stringify({ task_id: taskId }),
   });
 }

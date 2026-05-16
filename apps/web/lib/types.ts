@@ -1,4 +1,4 @@
-import type { RiskLevel, VerificationStatus } from "@civicshield/shared";
+import type { RiskLevel, ReviewStatus, VerificationStatus } from "@civicshield/shared";
 
 export type Source = {
   title: string;
@@ -49,3 +49,35 @@ export type Incident = {
   evidence: string[];
   sources: Source[];
 };
+
+export type ReviewTask = {
+  id: string;
+  submitted_content: string;
+  extracted_claim: string;
+  topic: string;
+  jurisdiction: string;
+  is_voting_related: boolean;
+  suggested_verification_status: VerificationStatus;
+  suggested_risk_level: RiskLevel;
+  ai_disclosure_status:
+    | "ai_disclosed"
+    | "ai_not_disclosed"
+    | "ai_unclear"
+    | "not_applicable";
+  sponsor_status:
+    | "sponsor_found"
+    | "sponsor_missing"
+    | "sponsor_unclear"
+    | "not_applicable";
+  confidence: "low" | "medium" | "high";
+  sources: Source[];
+  reviewer_notes: string;
+  review_status: ReviewStatus;
+};
+
+export type ReviewTaskUpdate = Partial<{
+  review_status: ReviewStatus;
+  reviewer_notes: string;
+  suggested_verification_status: VerificationStatus;
+  suggested_risk_level: RiskLevel;
+}>;

@@ -3,7 +3,7 @@ const principles = [
   "Official sources come first when answering civic and election process questions.",
   "The product never claims perfect deepfake or synthetic media detection.",
   "Evidence is separated from interpretation so users can see what is known and what remains uncertain.",
-  "High-risk political and election claims should eventually move through human review.",
+  "High-risk political and election claims move through the mock human review workflow.",
 ];
 
 const labels = [
@@ -21,8 +21,9 @@ export default function MethodologyPage() {
       <h1 className="section-title">Methodology</h1>
       <p className="section-copy">
         CivicShield is designed as a nonpartisan civic verification platform.
-        Phase 2 demonstrates local source retrieval and mock provider output
-        before real AI calls, databases, or human review queues are added.
+        Phase 3 demonstrates local source retrieval, mock provider output, and
+        an in-memory human review queue before real AI calls, databases, or
+        production access controls are added.
       </p>
 
       <section className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">

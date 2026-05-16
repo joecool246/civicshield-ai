@@ -25,6 +25,14 @@ SponsorStatus = Literal[
     "not_applicable",
 ]
 Confidence = Literal["low", "medium", "high"]
+ReviewStatus = Literal[
+    "pending",
+    "in_review",
+    "approved",
+    "rejected",
+    "published",
+    "needs_more_evidence",
+]
 
 
 class Source(BaseModel):
@@ -65,6 +73,30 @@ class CheckResponse(BaseModel):
     sources: list[Source]
 
 
+class ReviewTask(BaseModel):
+    id: str
+    submitted_content: str
+    extracted_claim: str
+    topic: str
+    jurisdiction: str
+    is_voting_related: bool
+    suggested_verification_status: VerificationStatus
+    suggested_risk_level: RiskLevel
+    ai_disclosure_status: AiDisclosureStatus
+    sponsor_status: SponsorStatus
+    confidence: Confidence
+    sources: list[Source]
+    reviewer_notes: str = ""
+    review_status: ReviewStatus = "pending"
+
+
+class ReviewUpdateRequest(BaseModel):
+    review_status: ReviewStatus | None = None
+    reviewer_notes: str | None = None
+    suggested_verification_status: VerificationStatus | None = None
+    suggested_risk_level: RiskLevel | None = None
+
+
 class Incident(BaseModel):
     id: str
     title: str
@@ -75,3 +107,19 @@ class Incident(BaseModel):
     summary: str
     evidence: list[str]
     sources: list[Source]
+
+
+class IncidentCreateRequest(BaseModel):
+    task_id: str
+    title: str | None = None
+    summary: str | None = None
+
+
+class IncidentUpdateRequest(BaseModel):
+    title: str | None = None
+    incident_type: str | None = None
+    location: str | None = None
+    status: VerificationStatus | None = None
+    risk_level: RiskLevel | None = None
+    summary: str | None = None
+    evidence: list[str] | None = None

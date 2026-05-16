@@ -51,7 +51,7 @@ class MockAIProvider(AIProvider):
         if not sources:
             return AskResponse(
                 answer=(
-                    "Unable to verify from trusted sources. Phase 2 uses only the local trusted source dataset, "
+                    "Unable to verify from trusted sources. CivicShield uses only the local trusted source dataset, "
                     "and no retrieved source supports this answer."
                 ),
                 status="unable_to_verify",
@@ -136,7 +136,7 @@ class MockAIProvider(AIProvider):
             )
 
         explanation = (
-            "This mock Phase 2 analysis extracts structured claim fields and assigns CivicShield labels. "
+                "This mock analysis extracts structured claim fields and assigns CivicShield labels. "
             "It does not make a final factual ruling unless trusted sources directly support the claim."
         )
         if high_risk:

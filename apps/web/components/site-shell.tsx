@@ -6,6 +6,7 @@ const navItems = [
   { href: "/ask", label: "Ask" },
   { href: "/check", label: "Check" },
   { href: "/incidents", label: "Incidents" },
+  { href: "/admin", label: "Admin" },
   { href: "/methodology", label: "Methodology" },
 ];
 
@@ -42,8 +43,9 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-civic-line bg-white">
       <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-civic-muted">
-        CivicShield AI Phase 2 uses local trusted sources and a mock provider by default.
-        It does not endorse candidates, recommend votes, or claim perfect deepfake detection.
+        CivicShield AI Phase 3 uses local trusted sources, a mock provider, and an
+        in-memory human review workflow. It does not endorse candidates, recommend
+        votes, or claim perfect deepfake detection.
       </div>
     </footer>
   );

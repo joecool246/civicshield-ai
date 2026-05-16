@@ -15,7 +15,7 @@ class OpenAIProviderPlaceholder(MockAIProvider):
     def answer_question(self, question: str, sources: list[TrustedSource]) -> AskResponse:
         response = super().answer_question(question, sources)
         response.note = (
-            "OpenAI provider placeholder is enabled, but Phase 2 still uses safe mock generation "
+            "OpenAI provider placeholder is enabled, but CivicShield still uses safe mock generation "
             "until a real source-grounded prompt and validation layer are implemented. "
             + response.note
         )
@@ -24,7 +24,7 @@ class OpenAIProviderPlaceholder(MockAIProvider):
     def analyze_post(self, content: str, sources: list[TrustedSource]) -> CheckResponse:
         response = super().analyze_post(content, sources)
         response.explanation = (
-            "OpenAI provider placeholder is enabled, but Phase 2 still returns deterministic structured output. "
+            "OpenAI provider placeholder is enabled, but CivicShield still returns deterministic structured output. "
             + response.explanation
         )
         return response

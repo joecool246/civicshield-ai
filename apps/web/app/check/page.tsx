@@ -33,7 +33,7 @@ export default function CheckPage() {
       <h1 className="section-title">Check This Political Post</h1>
       <p className="section-copy">
         Paste a political claim, ad text, social post, or screenshot transcript.
-        CivicShield returns a structured verification-oriented review for Phase 2.
+        CivicShield returns structured labels and flags high-risk claims for review.
       </p>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
