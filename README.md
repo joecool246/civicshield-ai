@@ -1,39 +1,28 @@
 # CivicShield AI
 
-CivicShield AI is a nonpartisan civic verification platform for helping voters
-verify political information in the AI era.
+**Nonpartisan civic-information verification workbench** · Next.js 14 · TypeScript · FastAPI · Python
 
-Phase 4 adds a mock AI Bias Audit Lab for studying political AI response risks:
+CivicShield is a **local MVP** for exploring source-grounded civic answers, structured checks of political claims, human review workflows, and audits of AI responses. It is designed around a principle: **show evidence and uncertainty instead of presenting unverified claims as facts.**
 
-- Next.js frontend in `apps/web`
-- FastAPI backend in `apps/api`
-- Shared civic labels in `packages/shared`
-- AI provider abstraction with a mock provider by default
-- Local trusted source snippets in `apps/api/data/trusted_sources`
-- Source-grounded Ask CivicShield responses
-- Structured Check This Post output
-- Admin review queue at `/admin`
-- Mock in-memory incident publishing from reviewed tasks
-- Bias Audit Lab at `/bias-audit`
+> **Demo boundary:** The current default AI provider is deterministic mock logic. The bias-audit records and incidents are illustrative. This repository does **not** demonstrate real model-bias measurements, real-time misinformation detection, or a production deployment.
 
-This phase does not include a database, authentication, browser extension, real
-AI calls, or production deployment.
+## What you can explore
 
-## Production TODO
+| Workflow | Implementation |
+| --- | --- |
+| Ask CivicShield | Search locally bundled trusted-source snippets and return source-aware answers or `unable_to_verify` |
+| Check This Post | Produce structured labels and supporting context for submitted text |
+| Review queue | Inspect mock high-risk claims, add reviewer notes, and update review status |
+| Incident publishing | Publish reviewed demo tasks to an in-memory incident feed |
+| Bias Audit Lab | Explore seeded *mock* response-risk examples with methodology notes |
 
-TODO: Add authentication and role-based access before production. The `/admin`
-page and `/api/admin/*` routes are intentionally unauthenticated for the local
-MVP only.
+The application contains a Next.js frontend (`apps/web`), a FastAPI backend (`apps/api`), and shared civic labels (`packages/shared`). The provider boundary separates local deterministic logic from a future real-model integration.
 
-## Requirements
+## Quick start
 
-- Node.js 20 or newer
-- npm 10 or newer
-- Python 3.11 or newer
+**Prerequisites:** Node.js 20+, npm 10+, Python 3.11+.
 
-## Run the backend
-
-From the repo root:
+Start the API from the repository root:
 
 ```powershell
 cd apps/api
@@ -43,137 +32,49 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 
-Health check:
-
-```powershell
-Invoke-RestMethod http://localhost:8000/health
-```
-
-Backend routes:
-
-- `GET /health`
-- `POST /api/ask`
-- `POST /api/check`
-- `GET /api/incidents`
-- `GET /api/incidents/{id}`
-- `GET /api/admin/review-queue`
-- `POST /api/admin/review/{task_id}`
-- `POST /api/admin/incidents`
-- `PATCH /api/admin/incidents/{incident_id}`
-- `GET /api/bias-audits`
-- `GET /api/bias-audits/{audit_id}`
-
-## Run the frontend
-
-In a second terminal, from the repo root:
+In another terminal, from the **repository root**:
 
 ```powershell
 npm install
 npm run dev:web
 ```
 
-Open:
+Visit **http://localhost:3000**. API health check: **http://localhost:8000/health**. The frontend defaults to `http://localhost:8000` unless `NEXT_PUBLIC_API_URL` is set.
 
-```text
-http://localhost:3000
-```
+The default `CIVICSHIELD_AI_PROVIDER=mock` requires no external credentials. Do not assume that setting `openai` enables actual OpenAI calls: the provider is currently a placeholder.
 
-The frontend reads the API URL from `NEXT_PUBLIC_API_URL`. If unset, it uses:
+## Guided walkthrough
 
-```text
-http://localhost:8000
-```
+1. Open `/ask` and ask a civic-information question. Inspect whether returned local snippets support the answer.
+2. Open `/check` to examine a structured claim-check result.
+3. Open `/admin`, review a mock task, change its status, and publish it as a demo incident.
+4. Open `/incidents` to see the published in-memory record.
+5. Open `/bias-audit` to review seeded audit examples. **These scores are illustrative, not measurements of real models.**
 
-## Test the Bias Audit Lab
+Review state resets on backend restart.
 
-1. Start the backend and frontend.
-2. Open `http://localhost:3000/bias-audit`.
-3. Confirm mock audit rows appear for voter ID laws, immigration, policing,
-   climate policy, candidate comparison, voting advice refusal, and ballot
-   measure explanation.
-4. Confirm each card shows the model name, topic, prompt, mock response, scores,
-   voting advice flag, overall risk, and methodology notes.
+## Architecture and key routes
 
-The audit data is mock-only. Scores are not proof of intentional bias, and
-human review is required before publishing real claims about specific models.
+- `apps/web`: Next.js pages for ask, check, incidents, admin review, methodology, and bias audits.
+- `apps/api/app/main.py`: FastAPI routes including `POST /api/ask`, `POST /api/check`, `GET /api/incidents`, `GET /api/admin/review-queue`, and `GET /api/bias-audits`.
+- `apps/api/data/trusted_sources`: local source snippets; retrieval is keyword-based, not vector retrieval.
+- `packages/shared`: shared data labels.
 
-## Test the Admin Dashboard
+## Engineering decisions
 
-1. Start the backend and frontend.
-2. Open `http://localhost:3000/admin`.
-3. Confirm the review queue shows mock high-risk election claims.
-4. Add reviewer notes and save them.
-5. Change verification status or risk level.
-6. Mark a task approved, rejected, or needs more evidence.
-7. Click `Publish as incident`.
-8. Open `/incidents` and confirm the published mock incident appears.
+- The system explicitly distinguishes source evidence from interpretation.
+- Unsupported questions should return `unable_to_verify`, not invented citations.
+- High-risk mock tasks have a human-review step before publishing.
+- AI-provider abstraction allows the application to run locally without paid API calls.
 
-All review state is in memory and resets when the backend restarts.
+## Limitations and next steps
 
-## AI Provider Setup
+**Not production-ready:** no authentication/authorization, persistent database, actual model inference, production deployment, or browser extension. In particular, `/admin` and `/api/admin/*` are intentionally unauthenticated in this local demo; **do not expose them publicly**.
 
-Local development uses the mock provider by default. No API key is required.
+Next engineering milestones: add role-based access, persistent review state, real source-grounded model integration with validation, automated tests, and a reproducible evaluation dataset.
 
-```text
-CIVICSHIELD_AI_PROVIDER=mock
-```
+## Screenshots / demo
 
-To test the OpenAI placeholder later, set both variables before starting the
-backend:
+Add screenshots or a short walkthrough recording only after capturing the app running locally. No screenshots or external deployment are claimed here.
 
-```powershell
-$env:CIVICSHIELD_AI_PROVIDER="openai"
-$env:OPENAI_API_KEY="your_api_key_here"
-uvicorn app.main:app --reload --port 8000
-```
-
-The OpenAI provider is intentionally a placeholder. It only activates when
-`OPENAI_API_KEY` is present and still returns deterministic safe output until a
-real source-grounded prompt, validation layer, and tests are added.
-
-## Trusted Sources
-
-Trusted source snippets live in:
-
-```text
-apps/api/data/trusted_sources/
-```
-
-Current sample sources include Vote.gov, the Indiana Voters Portal, the Indiana
-Election Division, and an Indiana county election office placeholder. Ask
-CivicShield retrieves from these local files before answering. If no trusted
-source supports the answer, it returns `unable_to_verify`.
-
-## Pages
-
-- `/` explains CivicShield and the mock-data boundary.
-- `/ask` lets users submit civic questions and receive source-grounded answers.
-- `/check` lets users paste political content and receive structured CivicShield labels.
-- `/incidents` lists mock and admin-published incident examples.
-- `/incidents/[id]` shows a mock incident detail view.
-- `/admin` shows the mock human review queue.
-- `/bias-audit` shows the mock AI political bias audit lab.
-- `/methodology` explains nonpartisan verification principles and audit limitations.
-
-## Product Principles
-
-- Do not endorse candidates.
-- Do not generate voting recommendations.
-- Use official sources first.
-- Cite sources whenever answering civic questions.
-- Show uncertainty clearly.
-- Never claim perfect deepfake or bias detection.
-- Do not invent sources.
-- Do not claim that real models are biased from mock audit data.
-- Label content as verified, misleading, disputed, unconfirmed, missing context, or unable to verify.
-- Separate evidence from interpretation.
-- Use human review for high-risk political or election claims.
-
-## Phase 4 Limitations
-
-- The default provider is deterministic mock logic, not real AI.
-- Bias audit data is seeded mock data and does not evaluate real models.
-- Local retrieval is simple keyword matching over JSON files, not vector search.
-- The OpenAI provider is a safe placeholder and does not call the OpenAI API yet.
-- Review tasks, admin-published incidents, and bias audits are in-memory/mock data only.
-- There is no database, authentication, upload storage, browser extension, or production deployment.
+**Scope:** educational and experimental nonpartisan software. No electoral endorsements, voting recommendations, or claims that mock bias results describe real-world model behavior.
