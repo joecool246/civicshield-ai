@@ -1,3 +1,55 @@
+# CivicShield AI — Civic Verification Research Prototype
+
+**A full-stack, nonpartisan civic-information verification prototype with human review workflows.**
+
+**Stack:** Next.js 14, TypeScript, React, Tailwind CSS, FastAPI, Python.  
+**Status:** Local research MVP. Uses mock provider responses, seeded audit data, and in-memory review state. **Not a deployed verification service.**
+
+## Why this project matters
+
+CivicShield explores how a civic-information product can separate **claims**, **supporting sources**, **reviewer decisions**, and **public-facing incident summaries**. It favors explicit uncertainty and human oversight rather than presenting an unverified AI judgment as fact.
+
+### Engineering highlights
+
+- Next.js pages for civic Q&A, claim checks, incidents, human review, and a bias-audit lab.
+- FastAPI endpoints with typed request and response models.
+- Local source lookup and an explicit `unable_to_verify` result when support is missing.
+- A review-to-publication workflow for *mock incidents*.
+- Python tests covering administrative workflows, audit behavior, and the verification pipeline.
+
+### Try it locally
+
+```bash
+# Terminal 1
+cd apps/api
+python -m venv .venv
+# Activate the virtual environment for your OS
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+
+```bash
+# Terminal 2, from the repository root
+npm install
+npm run dev:web
+```
+
+Visit `http://localhost:3000` and explore **Ask**, **Check**, **Admin**, and **Bias Audit**. No API key is needed in the default mock mode.
+
+### Current boundaries
+
+This project **does not yet call a live LLM**, authenticate admins, persist production records, or run real bias evaluations. The source lookup is local keyword search. Results from the bias lab are synthetic demonstrations, **not findings about real models**.
+
+### Next engineering milestones
+
+- Add real provider calls with source-grounded response validation and evaluation fixtures.
+- Add authentication, role-based authorization, and persistent records before deploying admin tools.
+- Add repeatable frontend/API integration tests and screenshots of the local demo.
+
+---
+
+## Detailed project documentation
+
 # CivicShield AI
 
 **Nonpartisan civic-information verification workbench** · Next.js 14 · TypeScript · FastAPI · Python
